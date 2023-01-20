@@ -1,8 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { FetchContext } from './context/FetchContext';
 import './App.css';
 
 function App() {
+  const [search, setSearch] = useState('');
   const { planets, fetchPlanets } = useContext(FetchContext);
 
   useEffect(() => {
@@ -12,8 +13,17 @@ function App() {
     resolvePromise();
   }, []);
 
+  const filteredPLanets = planets.filter((elem) => elem.name.toLowerCase()
+    .includes(search));
+
   return (
     <div>
+      <input
+        type="text"
+        data-testid="name-filter"
+        onChange={ (e) => setSearch(e.target.value) }
+        placeholder="Buscar planeta"
+      />
       <table>
         <thead>
           <tr>
@@ -34,7 +44,7 @@ function App() {
         </thead>
         <tbody>
           {
-            planets.map((elem) => (
+            filteredPLanets.map((elem) => (
               <tr key={ elem.name }>
                 <td>{ elem.name }</td>
                 <td>{ elem.rotation_period }</td>
