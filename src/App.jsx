@@ -1,15 +1,13 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { FetchContext } from './context/FetchContext';
 import './App.css';
 
 function App() {
-  const { fetchPlanets } = useContext(FetchContext);
-  const [planets, setPlanets] = useState([]);
+  const { planets, fetchPlanets } = useContext(FetchContext);
 
   useEffect(() => {
     const resolvePromise = async () => {
-      const resolvePromisse = await fetchPlanets();
-      setPlanets(resolvePromisse.results);
+      await fetchPlanets();
     };
     resolvePromise();
   }, []);
