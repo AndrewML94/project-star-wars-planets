@@ -1,69 +1,13 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { FetchContext } from './context/FetchContext';
+import React from 'react';
 import './App.css';
+import Header from './components/Header';
+import Table from './components/Table';
 
 function App() {
-  const [search, setSearch] = useState('');
-  const { planets, fetchPlanets } = useContext(FetchContext);
-
-  useEffect(() => {
-    const resolvePromise = async () => {
-      await fetchPlanets();
-    };
-    resolvePromise();
-  }, []);
-
-  const filteredPLanets = planets.filter((elem) => elem.name.toLowerCase()
-    .includes(search));
-
   return (
     <div>
-      <input
-        type="text"
-        data-testid="name-filter"
-        onChange={ (e) => setSearch(e.target.value) }
-        placeholder="Buscar planeta"
-      />
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Rotation Period</th>
-            <th>Orbital Period</th>
-            <th>Diameter</th>
-            <th>Climate</th>
-            <th>Gravity</th>
-            <th>Terrain</th>
-            <th>Surface Water</th>
-            <th>Population</th>
-            <th>Films</th>
-            <th>Created</th>
-            <th>Edited</th>
-            <th>URL</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            filteredPLanets.map((elem) => (
-              <tr key={ elem.name }>
-                <td>{ elem.name }</td>
-                <td>{ elem.rotation_period }</td>
-                <td>{ elem.orbital_period }</td>
-                <td>{ elem.diameter }</td>
-                <td>{ elem.climate }</td>
-                <td>{ elem.gravity }</td>
-                <td>{ elem.terrain }</td>
-                <td>{ elem.surface_water }</td>
-                <td>{ elem.population }</td>
-                <td>{ elem.films }</td>
-                <td>{ elem.created }</td>
-                <td>{ elem.edited }</td>
-                <td>{ elem.url }</td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
+      <Header />
+      <Table />
     </div>
   );
 }
