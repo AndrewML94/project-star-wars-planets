@@ -29,20 +29,30 @@ function FilterProvider({ children }) {
     setInputThree(param);
   };
 
-  console.log(inputTwo);
-
   const filterButton = () => {
     if (inputThree === 'maior que') {
       const biggerThen = planets.filter((elem) => elem[inputOne] > +inputTwo);
-      setFilterTable(...filterTable, biggerThen);
+      setFilterTable(biggerThen);
+      if (filterTable.length) {
+        const newBiggerThen = filterTable.filter((elem) => elem[inputOne] > +inputTwo);
+        setFilterTable(newBiggerThen);
+      }
     }
     if (inputThree === 'menor que') {
       const lessThan = planets.filter((elem) => elem[inputOne] < +inputTwo);
-      setFilterTable(...filterTable, lessThan);
+      setFilterTable(lessThan);
+      if (filterTable.length) {
+        const newLessThan = filterTable.filter((elem) => elem[inputOne] < +inputTwo);
+        setFilterTable(newLessThan);
+      }
     }
     if (inputThree === 'igual a') {
       const equalTo = planets.filter((elem) => elem[inputOne] === inputTwo);
-      setFilterTable(...filterTable, equalTo);
+      setFilterTable(equalTo);
+      if (filterTable.length) {
+        const newEqualTo = filterTable.filter((elem) => elem[inputOne] === inputTwo);
+        setFilterTable(newEqualTo);
+      }
     }
   };
 
@@ -56,7 +66,7 @@ function FilterProvider({ children }) {
     handleNum,
     biggerOrSmaller,
     filterButton,
-  }), [filteredPLanets, filterOne, filterTable]);
+  }), [filteredPLanets, filterOne, filterTable, inputTwo]);
 
   return (
     <FilterContext.Provider value={ contextValue }>
