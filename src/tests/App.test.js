@@ -54,7 +54,7 @@ describe('Testa a aplicação:', () => {
     expect(tatooine).toBeInTheDocument();
   });
 
-  it('Verifica se ao selecionar inputs do tipo select, o filtro é feito;', async () => {
+  it('Verifica se ao selecionar inputs do tipo select, o filtro é feito e pode ser excluído;', async () => {
     await act(() => render(
       <FetchProvider>
         <FilterProvider>
@@ -64,16 +64,40 @@ describe('Testa a aplicação:', () => {
     ));
 
     const columnInput = screen.getByTestId('column-filter');
-    const comparisonInput = screen.getByTestId('comparison-filter');
-    const numberInput = screen.getByTestId('value-filter');
-    const filterButton = screen.getByTestId('button-filter');
-    const filtersOn = screen.getByTestId('filter');
-
     userEvent.selectOptions(columnInput, 'population');
+    const comparisonInput = screen.getByTestId('comparison-filter');
     userEvent.selectOptions(comparisonInput, 'maior que');
+    const numberInput = screen.getByTestId('value-filter');
     userEvent.type(numberInput, '250000');
+    const filterButton = screen.getByTestId('button-filter');
+    userEvent.click(filterButton);
+    const filterSpan = screen.getByTestId('filter-span');
+
+    expect(filterSpan.innerHTML).toBe('population maior que 0250000');
+
+    const buttonEx = screen.getByTestId('filter-btn');
+    userEvent.click(buttonEx);
+  });
+
+  it('Verifica se o botão "Remover todos os filtros" apaga os filtros;', async () => {
+    await act(() => render(
+      <FetchProvider>
+        <FilterProvider>
+          <App />
+        </FilterProvider>
+      </FetchProvider>,
+    ));
+
+    const columnInput = screen.getByTestId('column-filter');
+    userEvent.selectOptions(columnInput, 'population');
+    const comparisonInput = screen.getByTestId('comparison-filter');
+    userEvent.selectOptions(comparisonInput, 'menor que');
+    const numberInput = screen.getByTestId('value-filter');
+    userEvent.type(numberInput, '250000');
+    const filterButton = screen.getByTestId('button-filter');
     userEvent.click(filterButton);
 
-    expect(filtersOn[0]).toEqual('<div><span>population maior que 0250000</span><button>Excluir</button></div>');
+    const buttonRemoveAll = screen.getByTestId('button-remove-filters');
+    userEvent.click(buttonRemoveAll);
   });
 });

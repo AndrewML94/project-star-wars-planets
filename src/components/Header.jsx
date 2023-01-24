@@ -67,8 +67,13 @@ function Header() {
           key={ index }
           data-testid="filter"
         >
-          <span>{ `${elem.column} ${elem.comparison} ${elem.value}` }</span>
+          <span
+            data-testid="filter-span"
+          >
+            { `${elem.column} ${elem.comparison} ${elem.value}` }
+          </span>
           <button
+            data-testid="filter-btn"
             onClick={ () => removeOneFilter(elem.column) }
           >
             Excluir
