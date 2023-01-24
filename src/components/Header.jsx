@@ -62,20 +62,19 @@ function Header() {
       >
         Remover todos os filtros
       </button>
-      <div
-        data-testid="filter"
-      >
-        { options.map((elem, index) => (
-          <div key={ index }>
-            <span>{ `${elem.column} ${elem.comparison} ${elem.value}` }</span>
-            <button
-              onClick={ () => removeOneFilter(elem.column) }
-            >
-              Excluir
-            </button>
-          </div>
-        ))}
-      </div>
+      { options.map((elem, index) => (
+        <div
+          key={ index }
+          data-testid="filter"
+        >
+          <span>{ `${elem.column} ${elem.comparison} ${elem.value}` }</span>
+          <button
+            onClick={ () => removeOneFilter(elem.column) }
+          >
+            Excluir
+          </button>
+        </div>
+      ))}
     </div>
   );
 }
