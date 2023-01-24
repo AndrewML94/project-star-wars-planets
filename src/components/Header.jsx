@@ -10,6 +10,9 @@ function Header() {
     biggerOrSmaller,
     filterButton,
     inputTwo,
+    options,
+    removeOneFilter,
+    removeAllFilters,
   } = useContext(FilterContext);
 
   return (
@@ -53,6 +56,25 @@ function Header() {
       >
         Filtrar
       </button>
+      <button
+        data-testid="button-remove-filters"
+        onClick={ removeAllFilters }
+      >
+        Remover todos os filtros
+      </button>
+      { options.map((elem, index) => (
+        <div
+          key={ index }
+          data-testid="filter"
+        >
+          <span>{ `${elem.column} ${elem.comparison} ${elem.value}` }</span>
+          <button
+            onClick={ () => removeOneFilter(elem.column) }
+          >
+            Excluir
+          </button>
+        </div>
+      ))}
     </div>
   );
 }
